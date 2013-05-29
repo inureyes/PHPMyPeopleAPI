@@ -13,8 +13,9 @@
 if (!defined('ROOT')) {
 	define('ROOT','.');
 }
-require_once(dirname(__FILE__).'/Singleton-Needlworks.php');
-
+if (!class_exists('Singleton')) {
+	require_once(dirname(__FILE__).'/Singleton-Needlworks.php');
+}
 class MyPeople extends Singleton {
 	public $names,$action,$buddyId,$groupId,$content;
 	private $api_url_prefix = "https://apis.daum.net";
@@ -47,7 +48,7 @@ class MyPeople extends Singleton {
 		if (in_array($this->action,array("inviteToGroup","createGroup"))) {
 			$buddys = json_decode($this->content, true);	
 			foreach($buddys as $key => $value) {
-				$this->names[$buddys[$key][buddyId]] = $this->__getBuddyName($buddys[$key][buddyId]);
+				$this->names[$buddys[$key][buddyId]] = $buddys[$key][name];#$this->__getBuddyName($buddys[$key][buddyId]);
 			}
 			$this->content = '';
 		}
@@ -166,7 +167,8 @@ class MyPeople extends Singleton {
 			return null;
 		}
 	}
-	
+	private function log($msg) {
+	}
 	private function errorLog($msg) {
 		echo $msg;
 	}
