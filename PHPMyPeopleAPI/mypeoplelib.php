@@ -10,7 +10,10 @@
  @homepage  http://github.com/inureyes/PHPMyPeopleAPI
  @version   0.01
 */
-require_once('./Singleton-Needlworks.php');
+if (!defined('ROOT')) {
+	define('ROOT','.');
+}
+require_once(dirname(__FILE__).'/Singleton-Needlworks.php');
 
 class MyPeople extends Singleton {
 	public $names,$action,$buddyId,$groupId,$content;
@@ -21,7 +24,7 @@ class MyPeople extends Singleton {
 	}
 	public function __construct() {
 		try {
-			$config = parse_ini_file('./config.ini');
+			$config = parse_ini_file(ROOT.'/config.ini');
 		} catch (Exception $e) {
 		    $this->errorLog($e->getMessage());
 		}
